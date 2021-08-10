@@ -4,8 +4,8 @@ const Discord = require("discord.js");
 require('dotenv').config({path:"./.env"});
 
 const client = new Discord.Client();
-let isReady = true
 const audiofiles = ["./audio/fdp.m4a", "./audio/connard.m4a", "./audio/enculé.m4a", "grosse_merde.m4a", "Ciao.ma4"]
+let isReady = true
 
 function sleep(ms)
 {
@@ -43,9 +43,10 @@ client.on('voiceStateUpdate', (oldMember, newMember) =>
 	let newUserChannel = newMember.channelID;
 	let oldUserChannel = oldMember.channelID;
 
-	if (oldMember.member.roles.cache.find(r => r.name === "bots") || newUserChannel === oldUserChannel)
+	if (oldMember.member.roles.cache.find(r => r.name === "bots") || newUserChannel === oldUserChannel || isReady != true)
 		return;
 
+	isReady = false
 	if (newUserChannel === process.env.CHANNEL_RADIO)
 	{
 		play_song("./audio/incoming.m4a", "4");
@@ -54,6 +55,7 @@ client.on('voiceStateUpdate', (oldMember, newMember) =>
 	{
 		play_song(audiofiles[Math.floor(Math.random() * 5)], "JhinRadio");
 	}
+	isReady = true
 });
 
 client.login(process.env.TOKEN);

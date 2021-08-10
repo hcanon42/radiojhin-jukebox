@@ -13,13 +13,13 @@ function play_song(song_to_play, msg)
 
 	voice_channel.join().then(connection =>
 	{
-		text_channel.send(msg);
-		console.log("Successfully connected");
+		//text_channel.send(msg);
+		//console.log("Successfully connected");
 		connection.play(song_to_play);
 		setTimeout(() => 
 		{
 			voice_channel.leave();
-		}, 10000);
+		}, 2000);
 	}).catch(err => console.log("this is an error: ", err));
 }
 
@@ -27,13 +27,6 @@ function play_song(song_to_play, msg)
 client.on("ready", () =>
 {
 	console.log(`Logged in as ${client.user.tag}!`)
-});
-
-// On message event
-client.on("message", msg =>
-{
-	if (msg.content === "pong")
-		msg.channel.send("ping");
 });
 
 // On voice chat change event
@@ -46,11 +39,11 @@ client.on('voiceStateUpdate', (oldMember, newMember) =>
 
 	if (newUserChannel === process.env.CHANNEL_RADIO)
 	{
-		play_song("./audio/incoming.wav", "\nBienvenue sur RadioJhin !");
+		play_song("./audio/incoming.m4a", "\nBienvenue sur RadioJhin !");
 	}
 	else if (oldUserChannel === process.env.CHANNEL_RADIO && client.channels.cache.find(channel => channel.id === process.env.CHANNEL_RADIO).members.size >= 1)
 	{
-		play_song('./audio/leaving.wav', 'A bientôt sur RadioJhin');
+		play_song('./audio/leaving.m4a', 'A bientôt sur RadioJhin');
 	}
 });
 

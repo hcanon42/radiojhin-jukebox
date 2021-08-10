@@ -43,7 +43,13 @@ client.on('voiceStateUpdate', (oldMember, newMember) =>
 	}
 	else if (oldUserChannel === process.env.CHANNEL_RADIO && client.channels.cache.find(channel => channel.id === process.env.CHANNEL_RADIO).members.size >= 1)
 	{
-		play_song('./audio/leaving.m4a', 'A bientôt sur RadioJhin');
+		const insulte = Math.floor(Math.random() * 3);
+		if (insulte == 0)
+			play_song('./audio/fdp.m4a', 'A bientôt sur RadioJhin');
+		else if (insulte == 1)
+			play_song('./audio/connard.m4a', 'A bientôt sur RadioJhin');
+		else
+			play_song('./audio/enculé.m4a', 'A bientôt sur RadioJhin');		
 	}
 });
 

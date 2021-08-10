@@ -11,9 +11,11 @@ function play_song(song_to_play, msg)
 {
 	setTimeout(() => 
 	{
-		const voice_channel = client.channels.cache.find(channel => channel.id === process.env.CHANNEL_RADIO);
-		const text_channel = client.channels.cache.find(channel => channel.id === process.env.CHANNEL_TEXT);
+		console.log("bonjour");
 	}, 2000);
+	const voice_channel = client.channels.cache.find(channel => channel.id === process.env.CHANNEL_RADIO);
+	//const text_channel = client.channels.cache.find(channel => channel.id === process.env.CHANNEL_TEXT);
+
 	voice_channel.join().then(connection =>
 	{
 		//text_channel.send(msg);

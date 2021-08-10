@@ -5,12 +5,15 @@ require('dotenv').config({path:"./.env"});
 
 const client = new Discord.Client();
 let isReady = true
+const audiofiles = ["./audio/fdp.m4a", "./audio/connard.m4a", "./audio/enculé.m4a"]
 
 function play_song(song_to_play, msg)
 {
-	const voice_channel = client.channels.cache.find(channel => channel.id === process.env.CHANNEL_RADIO);
-	const text_channel = client.channels.cache.find(channel => channel.id === process.env.CHANNEL_TEXT);
-
+	setTimeout(() => 
+	{
+		const voice_channel = client.channels.cache.find(channel => channel.id === process.env.CHANNEL_RADIO);
+		const text_channel = client.channels.cache.find(channel => channel.id === process.env.CHANNEL_TEXT);
+	}, 2000);
 	voice_channel.join().then(connection =>
 	{
 		//text_channel.send(msg);
@@ -43,13 +46,7 @@ client.on('voiceStateUpdate', (oldMember, newMember) =>
 	}
 	else if (oldUserChannel === process.env.CHANNEL_RADIO && client.channels.cache.find(channel => channel.id === process.env.CHANNEL_RADIO).members.size >= 1)
 	{
-		const insulte = Math.floor(Math.random() * 3);
-		if (insulte == 0)
-			play_song('./audio/fdp.m4a', 'A bientôt sur RadioJhin');
-		else if (insulte == 1)
-			play_song('./audio/connard.m4a', 'A bientôt sur RadioJhin');
-		else
-			play_song('./audio/enculé.m4a', 'A bientôt sur RadioJhin');		
+		play_song(audiofiles[Math.floor(Math.random() * 3)], "JhinRadio");
 	}
 });
 

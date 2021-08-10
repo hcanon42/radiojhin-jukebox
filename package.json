@@ -1,0 +1,33 @@
+{
+	"name": "radiojhin-jukebox",
+	"version": "1.0.0",
+	"description": "Welcome to RadioJhin: The Jhinest radio ever !",
+	"main": "srcs/main.js",
+	"scripts": {
+		"start": "node ./srcs/main.js",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/hcanon42/radiojhin-jukebox.git"
+	},
+	"keywords": [
+		"jhin",
+		"jukebox",
+		"radiojhin"
+	],
+	"author": "hcanon",
+	"license": "ISC",
+	"dependencies": {
+		"@discordjs/opus": "^0.5.3",
+		"discord.js": "^12.5.3",
+		"dotenv": "10.0.0",
+		"ffmpeg-static": "^4.4.0",
+		"node-opus": "^0.3.3"
+	},
+	"bugs": {
+		"url": "https://github.com/hcanon42/radiojhin-jukebox/issues"
+	},
+	"homepage": "https://github.com/hcanon42/radiojhin-jukebox#readme",
+	"type": "module"
+}

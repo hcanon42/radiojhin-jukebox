@@ -14,7 +14,8 @@ function sleep(ms)
 
 async function play_song(song_to_play, msg)
 {
-	await sleep(2000);
+	if (msg == "4")
+		await sleep(1000);
 	const voice_channel = client.channels.cache.find(channel => channel.id === process.env.CHANNEL_RADIO);
 	//const text_channel = client.channels.cache.find(channel => channel.id === process.env.CHANNEL_TEXT);
 
@@ -45,10 +46,9 @@ client.on('voiceStateUpdate', (oldMember, newMember) =>
 	if (oldMember.member.roles.cache.find(r => r.name === "bots") || newUserChannel === oldUserChannel)
 		return;
 
-	console.log(newUserChannel, oldUserChannel)
 	if (newUserChannel === process.env.CHANNEL_RADIO)
 	{
-		play_song("./audio/incoming.m4a", "\nBienvenue sur RadioJhin !");
+		play_song("./audio/incoming.m4a", "4");
 	}
 	else if (oldUserChannel === process.env.CHANNEL_RADIO && client.channels.cache.find(channel => channel.id === process.env.CHANNEL_RADIO).members.size >= 1)
 	{

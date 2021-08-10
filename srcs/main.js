@@ -5,14 +5,16 @@ require('dotenv').config({path:"./.env"});
 
 const client = new Discord.Client();
 let isReady = true
-const audiofiles = ["./audio/fdp.m4a", "./audio/connard.m4a", "./audio/enculé.m4a"]
+const audiofiles = ["./audio/fdp.m4a", "./audio/connard.m4a", "./audio/enculé.m4a", "grosse_merde.m4a", "Ciao.ma4"]
 
-function play_song(song_to_play, msg)
+function sleep(ms)
 {
-	setTimeout(() => 
-	{
-		console.log("bonjour");
-	}, 2000);
+	return (new Promise(resolve => setTimeout(resolve, ms)))
+}
+
+async function play_song(song_to_play, msg)
+{
+	await sleep(2000);
 	const voice_channel = client.channels.cache.find(channel => channel.id === process.env.CHANNEL_RADIO);
 	//const text_channel = client.channels.cache.find(channel => channel.id === process.env.CHANNEL_TEXT);
 
@@ -37,18 +39,20 @@ client.on("ready", () =>
 // On voice chat change event
 client.on('voiceStateUpdate', (oldMember, newMember) =>
 {
-	if (oldMember.member.roles.cache.find(r => r.name === "bots"))
-		return;
 	let newUserChannel = newMember.channelID;
 	let oldUserChannel = oldMember.channelID;
 
+	if (oldMember.member.roles.cache.find(r => r.name === "bots") || newUserChannel === oldUserChannel)
+		return;
+
+	console.log(newUserChannel, oldUserChannel)
 	if (newUserChannel === process.env.CHANNEL_RADIO)
 	{
 		play_song("./audio/incoming.m4a", "\nBienvenue sur RadioJhin !");
 	}
 	else if (oldUserChannel === process.env.CHANNEL_RADIO && client.channels.cache.find(channel => channel.id === process.env.CHANNEL_RADIO).members.size >= 1)
 	{
-		play_song(audiofiles[Math.floor(Math.random() * 3)], "JhinRadio");
+		play_song(audiofiles[Math.floor(Math.random() * 5)], "JhinRadio");
 	}
 });
 

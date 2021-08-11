@@ -35,10 +35,14 @@ async function play_song(song_to_play, msg)
 		await sleep(1000);
 	voice_channel.join().then(connection =>
 	{
-		connection.play(song_to_play);
+		const dispatcher = connection.play(song_to_play);
+		if (msg === 8)
+			dispatcher.setVolume(0.2)
 		setTimeout(() => 
 		{
 			voice_channel.leave();
+			if (msg === 8)
+				dispatcher.setVolume(1)
 		}, msg * 1000);
 	}).catch(err => console.log("this is an error: ", err));
 }
@@ -51,6 +55,7 @@ async function play_song(song_to_play, msg)
 client.on("ready", () =>
 {
 	const voice_channel = client.channels.cache.find(channel => channel.id === process.env.CHANNEL_RADIO);
+	play_song("./audio/jhinVoiceLines/" + jhinVoiceLines[Math.floor(Math.random() * jhinVoiceLines.length)], 8);
 
 	console.log(`Logged in as ${client.user.tag}!`)
 

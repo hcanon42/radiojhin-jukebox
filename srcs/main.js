@@ -87,7 +87,7 @@ client.on('voiceStateUpdate', (oldMember, newMember) =>
 	}
 	else if (oldUserChannel === voice_channel.id && voice_channel.members.size >= 1)
 	{
-		play_song(audiofiles[Math.floor(Math.random() * audiofiles.length)], 2);
+		play_song("./audio/audioRecords/" + audiofiles[Math.floor(Math.random() * audiofiles.length)], 2);
 	}
 	isReady = true
 });

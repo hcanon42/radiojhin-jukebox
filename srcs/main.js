@@ -1,45 +1,74 @@
+// ---REQUIREMENTS---
+
 import {createRequire} from "module";
 const require = createRequire(import.meta.url);
+const fs = require("fs");
+const cron = require("cron")
 const Discord = require("discord.js");
 require('dotenv').config({path:"./.env"});
 
-const client = new Discord.Client();
-const audiofiles = ["./audio/fdp.m4a", "./audio/connard.m4a", "./audio/enculé.m4a", "grosse_merde.m4a", "Ciao.ma4"]
-let isReady = true
 
+
+// ---COMMON VARIBLES---
+
+const client = new Discord.Client();
+const audiofiles = fs.readdirSync("./audio/audioRecords")
+let isReady = true
+let jhinVoiceLines = fs.readdirSync("./audio/jhinVoiceLines");
+
+
+
+// ---FUNCTIONS---
+
+// basic sleep function
 function sleep(ms)
 {
 	return (new Promise(resolve => setTimeout(resolve, ms)))
 }
 
+// main function to play an audio file
 async function play_song(song_to_play, msg)
 {
-	if (msg == "4")
-		await sleep(1000);
 	const voice_channel = client.channels.cache.find(channel => channel.id === process.env.CHANNEL_RADIO);
-	//const text_channel = client.channels.cache.find(channel => channel.id === process.env.CHANNEL_TEXT);
 
+	if (msg === 3)
+		await sleep(1000);
 	voice_channel.join().then(connection =>
 	{
-		//text_channel.send(msg);
-		//console.log("Successfully connected");
 		connection.play(song_to_play);
 		setTimeout(() => 
 		{
 			voice_channel.leave();
-		}, 2000);
+		}, msg * 1000);
 	}).catch(err => console.log("this is an error: ", err));
 }
+
+
+
+// ---EVENTS---
 
 // On ready event
 client.on("ready", () =>
 {
+	const voice_channel = client.channels.cache.find(channel => channel.id === process.env.CHANNEL_RADIO);
+
 	console.log(`Logged in as ${client.user.tag}!`)
+
+	let scheduledMessage = new cron.CronJob("00 43 * * * *", () =>
+	{
+		if (voice_channel.members.size >= 1)
+		{
+			play_song("./audio/jhinVoiceLines/" + jhinVoiceLines[Math.floor(Math.random() * jhinVoiceLines.length)], 8);
+		}
+	})
+	scheduledMessage.start()
+	
 });
 
 // On voice chat change event
 client.on('voiceStateUpdate', (oldMember, newMember) =>
 {
+	const voice_channel = client.channels.cache.find(channel => channel.id === process.env.CHANNEL_RADIO);
 	let newUserChannel = newMember.channelID;
 	let oldUserChannel = oldMember.channelID;
 
@@ -49,11 +78,11 @@ client.on('voiceStateUpdate', (oldMember, newMember) =>
 	isReady = false
 	if (newUserChannel === process.env.CHANNEL_RADIO)
 	{
-		play_song("./audio/incoming.m4a", "4");
+		play_song("./audio/incoming.m4a", 3);
 	}
-	else if (oldUserChannel === process.env.CHANNEL_RADIO && client.channels.cache.find(channel => channel.id === process.env.CHANNEL_RADIO).members.size >= 1)
+	else if (oldUserChannel === process.env.CHANNEL_RADIO && voice_channel.members.size >= 1)
 	{
-		play_song(audiofiles[Math.floor(Math.random() * 5)], "JhinRadio");
+		play_song(audiofiles[Math.floor(Math.random() * audiofiles.length)], 2);
 	}
 	isReady = true
 });

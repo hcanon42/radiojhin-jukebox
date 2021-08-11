@@ -13,8 +13,8 @@ require('dotenv').config({path:"./.env"});
 
 const client = new Discord.Client();
 const audiofiles = fs.readdirSync("./audio/audioRecords")
-let isReady = true
 let jhinVoiceLines = fs.readdirSync("./audio/jhinVoiceLines");
+let isReady = true
 
 
 
@@ -29,7 +29,7 @@ function sleep(ms)
 // main function to play an audio file
 async function play_song(song_to_play, msg)
 {
-	const voice_channel = client.channels.cache.find(channel => channel.id === process.env.CHANNEL_RADIO);
+	const voice_channel = client.channels.cache.find(channel => channel.name === "radioJhin");
 
 	if (msg === 3)
 		await sleep(1000);
@@ -54,7 +54,7 @@ async function play_song(song_to_play, msg)
 // On ready event
 client.on("ready", () =>
 {
-	const voice_channel = client.channels.cache.find(channel => channel.id === process.env.CHANNEL_RADIO);
+	const voice_channel = client.channels.cache.find(channel => channel.name === "radioJhin");
 	play_song("./audio/jhinVoiceLines/" + jhinVoiceLines[Math.floor(Math.random() * jhinVoiceLines.length)], 8);
 
 	console.log(`Logged in as ${client.user.tag}!`)
@@ -73,7 +73,7 @@ client.on("ready", () =>
 // On voice chat change event
 client.on('voiceStateUpdate', (oldMember, newMember) =>
 {
-	const voice_channel = client.channels.cache.find(channel => channel.id === process.env.CHANNEL_RADIO);
+	const voice_channel = client.channels.cache.find(channel => channel.name === "radioJhin");
 	let newUserChannel = newMember.channelID;
 	let oldUserChannel = oldMember.channelID;
 
@@ -81,11 +81,11 @@ client.on('voiceStateUpdate', (oldMember, newMember) =>
 		return;
 
 	isReady = false
-	if (newUserChannel === process.env.CHANNEL_RADIO)
+	if (newUserChannel === voice_channel.id)
 	{
 		play_song("./audio/incoming.m4a", 3);
 	}
-	else if (oldUserChannel === process.env.CHANNEL_RADIO && voice_channel.members.size >= 1)
+	else if (oldUserChannel === voice_channel.id && voice_channel.members.size >= 1)
 	{
 		play_song(audiofiles[Math.floor(Math.random() * audiofiles.length)], 2);
 	}

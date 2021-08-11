@@ -22,24 +22,23 @@ Project is created with:
 ## Description
 
 RadioJhin is only used by the best Jhins in the silver league of League of Legends.\
-Every hour, it joins a predefined voice channel if at least one person is connected on it and plays a randomly selected Jhin voice line.\
-It also welcomes everyone who comes in the channel.
+Every hour, it joins a voice channel called "radioJhin" if at least one person is connected on it and plays a randomly selected Jhin voice line.\
+It also welcomes everyone who comes in this channel.
 
 ## Installation
 
 To install the bot on your server, just enter the URL : https://discord.com/api/oauth2/authorize?client_id=874625717856514078&permissions=3145728&scope=bot  
 And you just have to choose the server you want to put it into !\
 (Don't forget that you need authorization to put a bot on your server)\
-I am currently working on a solution so that you may implement it on your own server without deploy your own bot.
 
 ## Usage
 
+You have to rename one of the voice channels --> "radioJhin"\
 Just connect to the selected channel and let the art begin !
 
 ## Utility
 
 None
-
 
 ## Contributing
 

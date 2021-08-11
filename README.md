@@ -22,7 +22,7 @@ Project is created with:
 ## Description
 
 RadioJhin is only used by the best Jhins in the silver league of League of Legends.\
-Every hour, it joins a voice channel called "radioJhin" if at least one person is connected on it and plays a randomly selected Jhin voice line.\
+Every hour, it joins a voice channel called "radiojhin" if at least one person is connected on it and plays a randomly selected Jhin voice line.\
 It also welcomes everyone who comes in this channel.
 
 ## Installation
@@ -33,7 +33,7 @@ And you just have to choose the server you want to put it into !\
 
 ## Usage
 
-You have to rename one of the voice channels --> "radioJhin"\
+You have to rename one of the voice channels --> "radiojhin"\
 Just connect to the selected channel and let the art begin !
 
 ## Utility

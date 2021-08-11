@@ -29,7 +29,7 @@ function sleep(ms)
 // main function to play an audio file
 async function play_song(song_to_play, msg)
 {
-	const voice_channel = client.channels.cache.find(channel => channel.name === "radioJhin");
+	const voice_channel = client.channels.cache.find(channel => channel.name === "radiojhin");
 
 	if (msg === 3)
 		await sleep(1000);
@@ -54,7 +54,7 @@ async function play_song(song_to_play, msg)
 // On ready event
 client.on("ready", () =>
 {
-	const voice_channel = client.channels.cache.find(channel => channel.name === "radioJhin");
+	const voice_channel = client.channels.cache.find(channel => channel.name === "radiojhin");
 	play_song("./audio/jhinVoiceLines/" + jhinVoiceLines[Math.floor(Math.random() * jhinVoiceLines.length)], 8);
 
 	console.log(`Logged in as ${client.user.tag}!`)
@@ -73,7 +73,7 @@ client.on("ready", () =>
 // On voice chat change event
 client.on('voiceStateUpdate', (oldMember, newMember) =>
 {
-	const voice_channel = client.channels.cache.find(channel => channel.name === "radioJhin");
+	const voice_channel = client.channels.cache.find(channel => channel.name === "radiojhin");
 	let newUserChannel = newMember.channelID;
 	let oldUserChannel = oldMember.channelID;
 

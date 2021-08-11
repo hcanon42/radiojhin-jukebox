@@ -54,7 +54,7 @@ client.on("ready", () =>
 
 	console.log(`Logged in as ${client.user.tag}!`)
 
-	let scheduledMessage = new cron.CronJob("00 43 * * * *", () =>
+	let scheduledMessage = new cron.CronJob("00 00 * * * *", () =>
 	{
 		if (voice_channel.members.size >= 1)
 		{

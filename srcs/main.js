@@ -13,7 +13,7 @@ require('dotenv').config({path:"./.env"});
 
 const client = new Discord.Client();
 const audiofiles = fs.readdirSync("./audio/audioRecords")
-let jhinVoiceLines = fs.readdirSync("./audio/jhinVoiceLines");
+const jhinVoiceLines = fs.readdirSync("./audio/jhinVoiceLines");
 let isReady = true
 
 
@@ -55,7 +55,7 @@ async function play_song(song_to_play, msg)
 client.on("ready", () =>
 {
 	const voice_channel = client.channels.cache.find(channel => channel.name === "radiojhin");
-	play_song("./audio/jhinVoiceLines/" + jhinVoiceLines[Math.floor(Math.random() * jhinVoiceLines.length)], 8);
+//	play_song("./audio/jhinVoiceLines/" + jhinVoiceLines[Math.floor(Math.random() * jhinVoiceLines.length)], 4);
 
 	console.log(`Logged in as ${client.user.tag}!`)
 
@@ -63,7 +63,7 @@ client.on("ready", () =>
 	{
 		if (voice_channel.members.size >= 1)
 		{
-			play_song("./audio/jhinVoiceLines/" + jhinVoiceLines[Math.floor(Math.random() * jhinVoiceLines.length)], 8);
+			play_song("./audio/jhinVoiceLines/" + jhinVoiceLines[Math.floor(Math.random() * jhinVoiceLines.length)], 4);
 		}
 	})
 	scheduledMessage.start()
@@ -87,7 +87,7 @@ client.on('voiceStateUpdate', (oldMember, newMember) =>
 	}
 	else if (oldUserChannel === voice_channel.id && voice_channel.members.size >= 1)
 	{
-		play_song("./audio/audioRecords/" + audiofiles[Math.floor(Math.random() * audiofiles.length)], 2);
+		play_song("./audio/audioRecords/" + audiofiles[Math.floor(Math.random() * audiofiles.length)], 4);
 	}
 	isReady = true
 });

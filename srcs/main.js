@@ -14,7 +14,6 @@ require('dotenv').config({path:"./.env"});
 const client = new Discord.Client();
 const audiofiles = fs.readdirSync("./audio/audioRecords")
 const jhinVoiceLines = fs.readdirSync("./audio/jhinVoiceLines");
-let isReady = true
 
 
 
@@ -77,10 +76,9 @@ client.on('voiceStateUpdate', (oldMember, newMember) =>
 	let newUserChannel = newMember.channelID;
 	let oldUserChannel = oldMember.channelID;
 
-	if (oldMember.member.roles.cache.find(r => r.name === "bots") || newUserChannel === oldUserChannel || isReady != true)
+	if (oldMember.member.roles.cache.find(r => r.name === "bots") || newUserChannel === oldUserChannel)
 		return;
 
-	isReady = false
 	if (newUserChannel === voice_channel.id)
 	{
 		play_song("./audio/incoming.m4a", 3);
@@ -89,7 +87,6 @@ client.on('voiceStateUpdate', (oldMember, newMember) =>
 	{
 		play_song("./audio/audioRecords/" + audiofiles[Math.floor(Math.random() * audiofiles.length)], 4);
 	}
-	isReady = true
 });
 
 client.login(process.env.TOKEN);
